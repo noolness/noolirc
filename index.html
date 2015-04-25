@@ -5,6 +5,11 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta name = "viewport" content = "initial-scale = 1.0, user-scalable = no">
 		<style>
+			html, body {
+				border: 0px;
+				margin: 0px;
+				padding: 0px;
+			}
 			html {
 				color: #ffffff;
 				background-color: #000000;
@@ -13,12 +18,16 @@
 			input[type="text"] {
 				color: #ffffff;
 				background-color: #000000;
-				border: 1px solid #ffffff;
-				width: 95%;
+				padding: 0px;
+				border-width: 0px;
+				width: 100%;
 				font-size: 100%;
+				display:block;
 			}
-			inputTextArea {
-				text-align: center;
+			#inputTextArea {
+				//text-align: center;
+				border: 1px solid #ffffff;
+				padding: 4px;
 			}
 		</style>
 	</head>
