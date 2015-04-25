@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+	<head>
+		<title>Nool IRC</title>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name = "viewport" content = "initial-scale = 1.0, user-scalable = no">
+		<style>
+			html {
+				color: #ffffff;
+				background-color: #000000;
+				font-family: arial;
+			}
+			input[type="text"] {
+				color: #ffffff;
+				background-color: #000000;
+				border: 1px solid #ffffff;
+				width: 95%;
+				font-size: 100%;
+			}
+			inputTextArea {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script>
+		var messages = [];
+		
+		function getTwoDigitNumber(number) {
+			if(number < 10) {
+				return "0" + number;
+			} else {
+				return "" + number;
+			}
+		}
+		
+		$(document).ready(function() {
+			$("form").submit(function(e) {
+				$.ajax({
+					url: "/sendMessage",
+					data: {
+						message: $("#messageToSend").val()
+					},
+					success: function(data) {
+					
+					}
+				});
+				$("#messageToSend").val("");
+				return false;
+				//event.preventDefault();
+			});	
+		});
+		window.setInterval(function() {
+			$.ajax({
+				url: "/getMessages",
+				data: {
+					startIndex: messages.length
+				},
+				success: function(data) {
+					for(var c=0;c<data.length;c++) {
+						messages.push(data[c]);
+					}
+
+					var messagesReceived = "";
+					for(var c=0;c<messages.length;c++) {
+						var messageDate = new Date(messages[c].date);
+						var formattedDate =  getTwoDigitNumber(messageDate.getHours()) + ":" +
+						getTwoDigitNumber(messageDate.getMinutes());
+						//var formattedDate = messageDate.toLocaleString();
+						messagesReceived += "<p>" + formattedDate + " [" +  messages[c].from + "] " + messages[c].text + "</p>";
+					}
+					$("#messageBox").html(messagesReceived);
+
+					if($("body").height() > $(window).height() && data.length > 0) {
+						$('html, body').animate({scrollTop:$(document).height()});
+					}
+				}
+			})
+		}, 1000);
+
+		</script>
+		<div id="messageBox"></div>
+		<div id="inputTextArea">
+			<form>
+				<input name="messageToSend" id="messageToSend" type="text" autofocus/>
+				<!--<input type="submit"/>-->
+			</form>
+		</div>
+	</body>
+</html>
