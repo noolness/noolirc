@@ -1,3 +1,5 @@
+This IRC client doesn't implement any security is is still under heavy development. Use at your own risk.
+
 noolirc is a simple web based IRC client written using node.js. The goal it to make it simple and customizable, so you can repurpose the client for whatever need you may have.
 
 ## Installation
