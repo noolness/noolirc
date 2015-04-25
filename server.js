@@ -1,7 +1,9 @@
 var config = {
+	ip: "192.168.1.101",
+	port: 8080,
 	channels: ["#gameinaday"],
 	server: "irc.maxgaming.net",
-	botName: "noolirc"
+	username: "noolirc"
 };
 
 var http = require('http');
@@ -12,7 +14,7 @@ var mainPage = fs.readFileSync('index.html');
 var messages = [];
 
 // Create the bot name
-var bot = new irc.Client(config.server, config.botName, {
+var bot = new irc.Client(config.server, config.username, {
 	channels: config.channels
 });
 
@@ -77,7 +79,7 @@ http.createServer(function (req, res) {
 		var d = new Date();
 		var message = {
 			date: d,
-			from: config.botName,
+			from: config.username,
 			to: config.channels[0],
 			text: requestDetails.query.message,
 			message: requestDetails.query.message
@@ -85,7 +87,6 @@ http.createServer(function (req, res) {
 		messages.push(message);
 	}
 
-}).listen(8080, '192.168.1.101');
+}).listen(config.port, config.ip);
 
-console.log('Server running at http://192.168.1.101:8080/');
-
+console.log("Server running at http://" + config.ip + ":" + config.port + "/");
