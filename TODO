@@ -2,3 +2,4 @@
 * Implement support for multiple channels
 * Implement private message support
 * Implement support for listing users in a channel
+* Make it so that when you restart the server, the client can handle it properly
