@@ -28,10 +28,106 @@ bot.addListener("message", function(from, to, text, message) {
 	//bot.say(from, "This is a repsonse to a private message");
 });
 
-// Listen for any message, say to him/her in the room
+bot.addListener("join", function(inChannel, inNick, inMessage) {
+	var d = new Date();
+	var message = {
+		type: "join",
+		date: d,
+		channel: inChannel,
+		nick: inNick,
+		message: inMessage,
+	};
+	messages.push(message);
+});
+
+bot.addListener("part", function(inChannel, inNick, inMessage) {
+	var d = new Date();
+	var message = {
+		type: "part",
+		date: d,
+		channel: inChannel,
+		nick: inNick,
+		message: inMessage,
+	};
+	messages.push(message);
+});
+
+bot.addListener("quit", function(inNick, inReason, inChannel, inMessage) {
+	var d = new Date();
+	var message = {
+		type: "quit",
+		date: d,
+		nick: inNick,
+		reason: inReason,
+		channel: inChannel,
+		message: inMessage,
+	};
+	messages.push(message);
+});
+
+bot.addListener("kick", function(inChannels, inNick, inBy, inReason, inMessage) {
+	var d = new Date();
+	var message = {
+		type: "kick",
+		date: d,
+		channels: inChannels,
+		nick: inNick,
+		by: inBy,
+		reason: inReason,
+		message: inMessage,
+	};
+	messages.push(message);
+});
+
+bot.addListener("kill", function(inNick, inReason, inChannels, inMessage) {
+	var d = new Date();
+	var message = {
+		type: "kill",
+		date: d,
+		nick: inNick,
+		reason: inReason,
+		channels: inChannels,
+		message: inMessage,
+	};
+	messages.push(message);
+});
+
 bot.addListener("message", function(inFrom, inTo, inText, inMessage) {
 	var d = new Date();
 	var message = {
+		type: "message",
+		date: d,
+		from: inFrom,
+		to: inTo,
+		text: inText,
+		message: inMessage
+	};
+	messages.push(message);
+
+	//bot.say(config.channels[0], "This is a response to a channel message");
+});
+
+
+bot.addListener("nick", function(inOldNick, inNewNick, inChannels, inMessage) {
+	var d = new Date();
+	var message = {
+		type: "nick",
+		date: d,
+		from: inFrom,
+		oldNick: inOldNick,
+		newNick: inNewNick,
+		channels: inChannels,
+		message: inMessage
+	};
+	messages.push(message);
+
+	//bot.say(config.channels[0], "This is a response to a channel message");
+});
+
+bot.addListener("action", function(inFrom, inTo, inText, inMessage) {
+	var d = new Date();
+	var message = {
+		type: "action",
 		date: d,
 		from: inFrom,
 		to: inTo,
@@ -48,18 +144,13 @@ http.createServer(function (req, res) {
 	var requestDetails = url.parse(req.url, true);
 
 	if(requestDetails.pathname == "/") {
-		console.log("accessed root");
+		console.log("/ called.");
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		res.end(mainPage);
 	}
-	
-	if(requestDetails.pathname == "/getAllMessages") {
-		console.log("/getAllMessages called.");
-		res.writeHead(200, {'Content-Type': 'application/json'});
-		res.end(JSON.stringify(messages));	
-	}
 
 	if(requestDetails.pathname == "/getMessages") {
+		console.log("/getMessages called.");
 		res.writeHead(200, {'Content-Type': 'application/json'});
 		var messagesToSend = [];
 		
@@ -78,6 +169,7 @@ http.createServer(function (req, res) {
 
 		var d = new Date();
 		var message = {
+			type: "message",
 			date: d,
 			from: config.username,
 			to: config.channels[0],

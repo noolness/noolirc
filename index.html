@@ -25,7 +25,6 @@
 				display:block;
 			}
 			#inputTextArea {
-				//text-align: center;
 				border: 1px solid #ffffff;
 				padding: 4px;
 			}
@@ -77,8 +76,63 @@
 						var formattedDate =  getTwoDigitNumber(messageDate.getHours()) + ":" +
 						getTwoDigitNumber(messageDate.getMinutes());
 						//var formattedDate = messageDate.toLocaleString();
-						messagesReceived += "<p>" + formattedDate + " [" +  messages[c].from + "] " + messages[c].text + "</p>";
+						
+						if(messages[c].type == "join") {
+							messagesReceived +=
+								"<p>" + formattedDate + " -!- " +
+								messages[c].nick + " has joined the channel</p>";
+						}
+						
+						if(messages[c].type == "part") {
+							messagesReceived +=
+								"<p>" + formattedDate + " -!- " +
+								messages[c].nick + " has left the channel</p>";
+						}
+						
+						if(messages[c].type == "quit") {
+							messagesReceived +=
+								"<p>" + formattedDate + " -!- " +
+								messages[c].nick + " has quit: " +
+								messages[c].reason + "</p>";
+						}
+						
+						if(messages[c].type == "kick") {
+							messagesReceived +=
+								"<p>" + formattedDate + " -!- " +
+								messages[c].nick + " has been kicked by " +
+								messages[c].by + ": " +
+								messages[c].reason + "</p>";
+						}
+						
+						if(messages[c].type == "kill") {
+							messagesReceived +=
+								"<p>" + formattedDate + " -!- " +
+								messages[c].nick + " has been killed: " +
+								messages[c].reason + "</p>";
+						}
+						
+						if(messages[c].type == "message") {
+							messagesReceived +=
+								"<p>" + formattedDate + " [" +
+								messages[c].from + "] " +
+								messages[c].text + "</p>";
+						}
+						
+						if(messages[c].type == "nick") {
+							messagesReceived +=
+								"<p>" + formattedDate + " -!- " +
+								messages[c].oldNick + " has changed their nick to " +
+								messages[c].newNick + "</p>";
+						}
+						
+						if(messages[c].type == "action") {
+							messagesReceived +=
+								"<p>" + formattedDate + " *" +
+								messages[c].from + "* " +
+								messages[c].text + "</p>";
+						}
 					}
+					
 					$("#messageBox").html(messagesReceived);
 
 					if($("body").height() > $(window).height() && data.length > 0) {
