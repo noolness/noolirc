@@ -77,6 +77,27 @@
 						getTwoDigitNumber(messageDate.getMinutes());
 						//var formattedDate = messageDate.toLocaleString();
 						
+						if(messages[c].type == "motd") {
+							messagesReceived +=
+								"<p>" + formattedDate + " -!- " +
+								messages[c].motd + "</p>";
+						}
+						
+						if(messages[c].type == "names") {
+							messagesReceived += "<p>" + formattedDate + " -!- Users in channel:"
+							for(var prop in messages[c].nicks) {
+								messagesReceived += " " + messages[c].nicks[prop] + prop;
+							}
+							messagesReceived += "</p>";
+						}
+						
+						if(messages[c].type == "topic") {
+							messagesReceived +=
+								"<p>" + formattedDate + " -!- " +
+								messages[c].nick + " changed the topic of the channel: " +
+								messages[c].topic + "</p>";
+						}
+						
 						if(messages[c].type == "join") {
 							messagesReceived +=
 								"<p>" + formattedDate + " -!- " +

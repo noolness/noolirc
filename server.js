@@ -28,6 +28,40 @@ bot.addListener("message", function(from, to, text, message) {
 	//bot.say(from, "This is a repsonse to a private message");
 });
 
+bot.addListener("motd", function(inMotd) {
+	var d = new Date();
+	var message = {
+		type: "motd",
+		date: d,
+		motd: inMotd
+	};
+	messages.push(message);
+});
+
+bot.addListener("names", function(inChannel, inNicks) {
+	var d = new Date();
+	var message = {
+		type: "names",
+		date: d,
+		channel: inChannel,
+		nicks: inNicks
+	};
+	messages.push(message);
+});
+
+bot.addListener("topic", function(inChannel, inTopic, inNick, inMessage) {
+	var d = new Date();
+	var message = {
+		type: "topic",
+		date: d,
+		channel: inChannel,
+		channel: inTopic,
+		nick: inNick,
+		message: inMessage,
+	};
+	messages.push(message);
+});
+
 bot.addListener("join", function(inChannel, inNick, inMessage) {
 	var d = new Date();
 	var message = {
