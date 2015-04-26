@@ -11,6 +11,7 @@ var irc = require("irc");
 var fs = require('fs');
 var url = require('url');
 var mainPage = fs.readFileSync('index.html');
+var appleTouchIcon = fs.readFileSync('apple-touch-icon.png');
 var messages = [];
 
 // Create the bot name
@@ -175,6 +176,12 @@ http.createServer(function (req, res) {
 		console.log("/ called.");
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		res.end(mainPage);
+	}
+	
+	if(requestDetails.pathname == "/apple-touch-icon.png") {
+		console.log("/apple-touch-icon.png called.");
+		res.writeHead(200, {'Content-Type': 'image/png'});
+		res.end(appleTouchIcon);
 	}
 
 	if(requestDetails.pathname == "/getMessages") {
