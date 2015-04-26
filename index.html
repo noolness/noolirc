@@ -66,6 +66,8 @@
 					startIndex: messages.length
 				},
 				success: function(data) {
+					if(data.length == 0) return;
+					
 					for(var c=0;c<data.length;c++) {
 						messages.push(data[c]);
 					}
@@ -156,7 +158,7 @@
 					
 					$("#messageBox").html(messagesReceived);
 
-					if($("body").height() > $(window).height() && data.length > 0) {
+					if($("body").height() > $(window).height()) {
 						$('html, body').animate({scrollTop:$(document).height()});
 					}
 				}
