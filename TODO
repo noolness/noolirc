@@ -1,0 +1,4 @@
+* Make sure all IRC client events are handled (like topic change)
+* Implement support for multiple channels
+* Implement private message support
+* Implement support for listing users in a channel
