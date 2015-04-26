@@ -103,8 +103,6 @@ bot.addListener("message", function(inFrom, inTo, inText, inMessage) {
 		message: inMessage
 	};
 	messages.push(message);
-
-	//bot.say(config.channels[0], "This is a response to a channel message");
 });
 
 
@@ -120,8 +118,6 @@ bot.addListener("nick", function(inOldNick, inNewNick, inChannels, inMessage) {
 		message: inMessage
 	};
 	messages.push(message);
-
-	//bot.say(config.channels[0], "This is a response to a channel message");
 });
 
 bot.addListener("action", function(inFrom, inTo, inText, inMessage) {
@@ -135,8 +131,6 @@ bot.addListener("action", function(inFrom, inTo, inText, inMessage) {
 		message: inMessage
 	};
 	messages.push(message);
-
-	//bot.say(config.channels[0], "This is a response to a channel message");
 });
 
 var http = require('http');
@@ -165,7 +159,7 @@ http.createServer(function (req, res) {
 		console.log("/sendMessage called: " + requestDetails.query.message);
 		res.writeHead(200, {'Content-Type': 'text/plain'});
 		bot.say(config.channels[0], requestDetails.query.message);
-		res.end(requestDetails.query.message);
+		res.end();
 
 		var d = new Date();
 		var message = {
